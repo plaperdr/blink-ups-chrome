@@ -11,7 +11,7 @@ import sys
 import threading
 import Queue
 import pickle
-from os.path import expanduser
+from os.path import expanduser,exists
 
 try:
   import Tkinter
@@ -131,9 +131,10 @@ def Main():
   thread.start()
 
   #SEND OPEN TABS
-  with open(profileFolder+"shared.pkl",'r') as sharedFile:
-    message = pickle.load(sharedFile)
-    send_message(message)
+  if exists(profileFolder+"shared.pkl"):
+    with open(profileFolder+"shared.pkl",'r') as sharedFile:
+      message = pickle.load(sharedFile)
+      send_message(message)
   main_window.mainloop()
 
   sys.exit(0)
