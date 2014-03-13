@@ -1,0 +1,9 @@
+{
+  "name": "com.cpi.accessor",
+  "description": "CPI Chrome File accessor",
+  "path": "cip-host.bat",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://kchblppkmdjabllhjijmakkojficnfml/"
+  ]
+}
