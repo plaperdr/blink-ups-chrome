@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+
+  "name": "Centralized Information Provider",
+  "short_name": "CIP",
+  "description": "Exports bookmarks and open tabs to a centralised folder",
+  "version": "0.1",
+  "author": "Pierre Laperdrix",
+  "offline_enabled": true,
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "storage",
+	"nativeMessaging"
+  ]
+}
+
