@@ -67,8 +67,7 @@ class CPIAccessor():
   def processMessages(self):
     message = self.queue.get()
     if message == None:
-      self.quit()
-      return
+      sys.exit(0)
                 
     with open(profileFolder+"shared.pkl",'w') as sharedFile:
       pickle.dump(message.encode('utf-8'),sharedFile)
