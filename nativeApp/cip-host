@@ -93,7 +93,7 @@ if Tkinter:
           return
                 
         with open(profileFolder+"shared.pkl",'w') as sharedFile:
-          pickle.dump(message,sharedFile)
+          pickle.dump(message.encode('utf-8'),sharedFile)
         self.log("Received %s" % message)
 
       self.after(100, self.processMessages)
