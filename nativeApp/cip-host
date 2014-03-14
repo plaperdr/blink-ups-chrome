@@ -1,11 +1,4 @@
 #!/usr/bin/env python
-# Copyright (c) 2012 The Chromium Authors. All rights reserved.
-# Use of this source code is governed by a BSD-style license that can be
-# found in the LICENSE file.
-
-# A simple native messaging host. Shows a Tkinter dialog with incoming messages
-# that also allows to send message back to the webapp.
-
 import struct
 import sys
 import threading
@@ -36,7 +29,6 @@ def send_message(message):
 
 # Thread that reads messages from the webapp.
 def read_thread_func(queue):
-  message_number = 0
   while 1:
     # Read the message length (first 4 bytes).
     text_length_bytes = sys.stdin.read(4)
@@ -50,7 +42,7 @@ def read_thread_func(queue):
     text_length = struct.unpack('i', text_length_bytes)[0]
 
     # Read the text (JSON object) of the message.
-    text = sys.stdin.read(text_length).decode('utf-8')
+    text = sys.stdin.read(text_length)
 
     if queue:
       queue.put(text)
@@ -69,8 +61,8 @@ class CPIAccessor():
     if message == None:
       sys.exit(0)
                 
-    with open(profileFolder+"shared.pkl",'w') as sharedFile:
-      pickle.dump(message.encode('utf-8'),sharedFile)
+    with open(profileFolder+"shared.pkl",'wb') as sharedFile:
+      pickle.dump(message,sharedFile,protocol=2)
 
 
 #################################  MAIN  #################################
@@ -84,7 +76,7 @@ def Main():
 
   #SEND OPEN TABS
   if exists(profileFolder+"shared.pkl"):
-    with open(profileFolder+"shared.pkl",'r') as sharedFile:
+    with open(profileFolder+"shared.pkl",'rb') as sharedFile:
       message = pickle.load(sharedFile)
       send_message(message)
   
