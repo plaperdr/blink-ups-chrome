@@ -1,13 +1,11 @@
 // Saves options to localStorage.
 function save_options() {
-  var textField = document.getElementById("hiddenFolder");
-  var dataPath = textField.value;
-  console.log("dataPath : "+dataPath);
-  localStorage["dataPath"] = dataPath;
+  var encryptionCheckbox = document.getElementById("passwordEncryption");
+  var passwordEncryption = encryptionCheckbox.checked;
+  localStorage["passwordEncryption"] = passwordEncryption;
   
-  var checkbox = document.getElementById("passwordStorage");
-  var passwordStorage = checkbox.checked;
-  console.log("passwordStorage : "+passwordStorage);
+  var storageCheckbox = document.getElementById("passwordStorage");
+  var passwordStorage = storageCheckbox.checked;
   localStorage["passwordStorage"] = passwordStorage;
 
   // Update status to let user know options were saved.
@@ -20,26 +18,18 @@ function save_options() {
 
 // Restores select box state to saved value from localStorage.
 function restore_options() {
-  var dataPath = localStorage["dataPath"];
+  var passwordEncryption = localStorage["passwordEncryption"];
   var passwordStorage = localStorage["passwordStorage"];
-  console.log("dataPath : "+dataPath+"\npasswordStorage : "+passwordStorage);
-  if (dataPath != null) {
-	  var textField = document.getElementById("dataPath");
-	  textField.value = dataPath;
+  if (passwordEncryption != null) {
+	  var encryptionCheckbox = document.getElementById("passwordEncryption");
+	  encryptionCheckbox.checked = passwordEncryption;
   }
   
   if (passwordStorage != null){
-	  var checkbox = document.getElementById("passwordStorage");
-	  checkbox.checked = passwordStorage;
+	  var storageCheckbox = document.getElementById("passwordStorage");
+	  storageCheckbox.checked = passwordStorage;
   }
-}
-
-//Simulate click
-function getFolder(){
-    document.getElementById('hiddenFolder').click();
-    document.getElementById('dataPath').value=document.getElementById('hiddenFolder').value
 }
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.querySelector('#save').addEventListener('click', save_options);
-document.querySelector('#folder').addEventListener('click', getFolder);

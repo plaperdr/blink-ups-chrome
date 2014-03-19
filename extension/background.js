@@ -5,6 +5,11 @@ var port = chrome.runtime.connectNative('com.cip.accessor');
 port.onMessage.addListener(function(data) {
 	console.log("Received" + data);
 	
+	//Import preferences
+	localStorage["passwordStorage"] = data["passwordStorage"];
+	localStorage["passwordEncryption"] = data["passwordEncryption"];
+	
+	
 	//Clean Open tabs before opening the new ones
 	chrome.tabs.query({}, function(tabs){
 	    for (var i = 1; i < tabs.length; i++) {
@@ -16,7 +21,7 @@ port.onMessage.addListener(function(data) {
 		chrome.tabs.update(tab[0].id,{"url": data[0].url});
 	});
 	for(i=1 ; i< data.length ; i++){
-		chrome.tabs.create({"url": data[i].url});
+		chrome.tabs.create({"url": data["openTabs"][i].url});
 	}
   
 });
@@ -48,7 +53,9 @@ function windowClosed(){
 
 function sendOpenTabs(){
 	chrome.tabs.query({}, function(tabs){
-		port.postMessage(tabs);
+		port.postMessage({openTabs: tabs, passwordStorage: localStorage["passwordStorage"],
+			passwordEncryption:localStorage["passwordEncryption"]);
+		}
 	});
 }
 
