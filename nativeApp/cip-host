@@ -52,7 +52,7 @@ def read_thread_func(queue):
 
 
 #################################  CPI ACCESSOR  #################################
-class CPIAccessor():
+class CIPAccessor():
   def __init__(self, queue):
     self.queue = queue
 
@@ -68,7 +68,7 @@ class CPIAccessor():
 #################################  MAIN  #################################
 def Main():
   queue = Queue.Queue()
-  accessor = CPIAccessor(queue)
+  accessor = CIPAccessor(queue)
 
   thread = threading.Thread(target=read_thread_func, args=(queue,))
   thread.daemon = True
