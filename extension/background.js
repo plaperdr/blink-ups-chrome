@@ -6,9 +6,14 @@ port.onMessage.addListener(function(data) {
 	console.log("Received " + typeof(data));
 	
 	//Import preferences
-	localStorage["passwordStorage"] = data["passwordStorage"];
-	localStorage["passwordEncryption"] = data["passwordEncryption"];
+	//localStorage["passwordStorage"] = data["passwordStorage"];
+	//localStorage["passwordEncryption"] = data["passwordEncryption"];
 	
+	chrome.storage.sync.set({
+		passwordEncryption: data["passwordEncryption"],
+		passwordStorage: data["passwordStorage"]
+	}, function() {
+	});
 	
 	//Clean Open tabs before opening the new ones
 	chrome.tabs.query({}, function(tabs){
@@ -56,9 +61,16 @@ function sendOpenTabs(){
 		for(i=0;i<tabs.length;i++){
 			trimmedTabs.push({url:tabs[i].url});
 		}
-		port.postMessage({openTabs: trimmedTabs, passwordStorage: localStorage["passwordStorage"],
-			passwordEncryption:localStorage["passwordEncryption"]
+		chrome.storage.sync.get({
+			  passwordEncryption: false,
+			  passwordStorage: false
+		}, function(items) {
+			console.log(items.passwordStorage+" "+items.passwordEncryption);
+			port.postMessage({openTabs: trimmedTabs, passwordStorage: items.passwordStorage,
+					passwordEncryption:items.passwordEncryption
+			});
 		});
+		
 	});
 }
 
