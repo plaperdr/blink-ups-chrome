@@ -1,11 +1,11 @@
 {
   "manifest_version": 2,
 
-  "name": "Centralized Information Provider",
-  "short_name": "CIP",
-  "description": "Exports bookmarks and open tabs to a centralised folder",
+  "name": "User-Profile Sync",
+  "short_name": "UPS",
+  "description": "Profile synchronisation extension for Blink",
   "version": "0.1",
-  "author": "Pierre Laperdrix",
+  "author": "Blink",
   "offline_enabled": true,
   "options_page": "options.html",
   "background": {

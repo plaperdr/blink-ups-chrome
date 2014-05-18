@@ -21,7 +21,7 @@ profileFolder = relativeToAbsoluteHomePath("~/.config/google-chrome/Default/")
 #################################  MESSAGES  #################################
 # Helper function that sends a message to the webapp.
 def send_message(message):
-   # Write message size.
+  # Write message size.
   sys.stdout.write(struct.pack('I', len(message)))
   # Write the message itself.
   sys.stdout.write(message)
@@ -51,8 +51,8 @@ def read_thread_func(queue):
       send_message('{"echo": %s}' % text)
 
 
-#################################  CPI ACCESSOR  #################################
-class CIPAccessor():
+#################################  UPS ACCESSOR  #################################
+class UPSAccessor():
   def __init__(self, queue):
     self.queue = queue
 
@@ -68,7 +68,7 @@ class CIPAccessor():
 #################################  MAIN  #################################
 def Main():
   queue = Queue.Queue()
-  accessor = CIPAccessor(queue)
+  accessor = UPSAccessor(queue)
 
   thread = threading.Thread(target=read_thread_func, args=(queue,))
   thread.daemon = True

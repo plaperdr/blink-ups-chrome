@@ -1,6 +1,6 @@
 {
-  "name": "com.cpi.accessor",
-  "description": "CPI Chrome File accessor",
+  "name": "com.ups.accessor",
+  "description": "UPS Chrome File accessor",
   "path": "cip-host.bat",
   "type": "stdio",
   "allowed_origins": [
