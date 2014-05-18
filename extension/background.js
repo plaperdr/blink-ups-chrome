@@ -1,14 +1,9 @@
-var port = chrome.runtime.connectNative('com.cip.accessor');
+var port = chrome.runtime.connectNative('com.ups.accessor');
 
 //When the extension receives a message, all opened tabs
 //are closed to open the new ones
 port.onMessage.addListener(function(data) {
-	console.log("Received " + typeof(data));
-	
 	//Import preferences
-	//localStorage["passwordStorage"] = data["passwordStorage"];
-	//localStorage["passwordEncryption"] = data["passwordEncryption"];
-	
 	chrome.storage.sync.set({
 		passwordEncryption: data["passwordEncryption"],
 		passwordStorage: data["passwordStorage"]
@@ -23,6 +18,7 @@ port.onMessage.addListener(function(data) {
 	    chrome.tabs.update(tabs[0].id,{"url": data["openTabs"][0].url})
 	});
 	
+	//Open the new tabs
 	for(i=1 ; i< data["openTabs"].length ; i++){
 		chrome.tabs.create({"url": data["openTabs"][i].url});
 	}
@@ -53,7 +49,8 @@ function windowClosed(){
 	sendOpenTabs();
 }
 
-
+//Send open tabs and user preferences 
+//to the native application
 function sendOpenTabs(){
 	chrome.tabs.query({}, function(tabs){
 		trimmedTabs = [];
@@ -65,7 +62,6 @@ function sendOpenTabs(){
 			  passwordEncryption: false,
 			  passwordStorage: false
 		}, function(items) {
-			console.log(items.passwordStorage+" "+items.passwordEncryption);
 			port.postMessage({openTabs: trimmedTabs, passwordStorage: items.passwordStorage,
 					passwordEncryption:items.passwordEncryption
 			});

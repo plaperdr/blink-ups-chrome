@@ -20,6 +20,6 @@ else
   fi
 fi
 
-HOST_NAME=com.cpi.accessor
-rm $TARGET_DIR/com.cip.accessor.json
+HOST_NAME=com.ups.accessor
+rm $TARGET_DIR/com.ups.accessor.json
 echo Native messaging host $HOST_NAME has been uninstalled.
