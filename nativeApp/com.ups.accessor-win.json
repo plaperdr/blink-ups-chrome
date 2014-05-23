@@ -4,6 +4,6 @@
   "path": "cip-host.bat",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://kchblppkmdjabllhjijmakkojficnfml/"
+    "chrome-extension://glmnpaocdojpccicgaphlfjdohgkfopa/"
   ]
 }
