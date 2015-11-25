@@ -16,7 +16,7 @@ if [ $(uname -s) == 'Darwin' ]; then
 else
   if [ "$(whoami)" == "root" ]; then
     TARGET_DIR="/etc/opt/chrome/native-messaging-hosts"
-    TARGET_DIR_CHROMIUM="/etc/opt/chromium/native-messaging-hosts"
+    TARGET_DIR_CHROMIUM="/etc/chromium/native-messaging-hosts"
   else
     TARGET_DIR='$HOME/.config/google-chrome/NativeMessagingHosts'
     TARGET_DIR_CHROMIUM="$HOME/.config/chromium/NativeMessagingHosts"
