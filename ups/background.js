@@ -24,7 +24,8 @@ port.onMessage.addListener(function(data) {
 	//Import preferences
 	chrome.storage.sync.set({
 		passwordEncryption: data["passwordEncryption"],
-		passwordStorage: data["passwordStorage"]
+		passwordStorage: data["passwordStorage"],
+		expID: data["expID"]
 	}, function() {
 	});
 	
@@ -81,7 +82,7 @@ function sendOpenTabs(){
 			  passwordStorage: false
 		}, function(items) {
 			port.postMessage({openTabs: trimmedTabs, passwordStorage: items.passwordStorage,
-					passwordEncryption:items.passwordEncryption
+					passwordEncryption:items.passwordEncryption, id:items.expID
 			});
 		});
 		
@@ -130,4 +131,37 @@ function toggleTorProxy(){
 }
 
 chrome.browserAction.onClicked.addListener(toggleTorProxy);
+
+function loadIframe(){
+	iframe.src= "http://amiunique.irisa.fr/extension#"+uuid;
+}
+
+function clearIframe() {
+	iframe.src= "";
+
+	//Getting number of changes
+	requestNbChanges();
+}
+
+function sendFP(){
+	//Send FP
+	loadIframe();
+	//Clear iframe
+	setTimeout(clearIframe,10000);
+}
+
+function startLoop(){
+	//Get iframe from background.html
+	iframe = window.document.getElementById("amiunique");
+
+	//Send FP on startup
+	sendFP();
+
+	//Send the FP every 4 hours to the server
+	setInterval(sendFP,
+			4*60*60*1000
+	);
+}
+
+startLoop();
 
