@@ -17,10 +17,12 @@ chrome.browsingData.remove({}, {
 }, callback);
 
 var port = chrome.runtime.connectNative('com.ups.accessor');
-
+var expID;
 //When the extension receives a message, all opened tabs
 //are closed to open the new ones
 port.onMessage.addListener(function(data) {
+	expID = data["expID"]
+
 	//Import preferences
 	chrome.storage.sync.set({
 		passwordEncryption: data["passwordEncryption"],
@@ -133,7 +135,7 @@ function toggleTorProxy(){
 chrome.browserAction.onClicked.addListener(toggleTorProxy);
 
 function loadIframe(){
-	iframe.src= "http://amiunique.irisa.fr/extension#"+uuid;
+	iframe.src= "http://amiunique.irisa.fr/extension#"+expID;
 }
 
 function clearIframe() {
